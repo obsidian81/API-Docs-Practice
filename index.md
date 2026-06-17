@@ -98,3 +98,9 @@ API documentation relies heavily on tables to explain data. Here is a quick brea
 | :--- | :--- | :---| 
 | Step 1 | Grip  | Place dominant right hand in front as your base |
 | Step 2 | Stance | Feet planted firmly, shoulder width apart | 
+
+## Project Milestones
+* [x] Master basic Markdown syntax (headings, lists, code blocks).
+* [x] Resolve table layout and column pipe errors.
+* [x] Initialize Git repository and link author profile.
+* [x] Publish the first official repository to GitHub.
