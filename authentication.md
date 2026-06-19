@@ -3,13 +3,17 @@
 All API requests must include a secure token in the header to be authorized
 
 ```bash
+
 Authorization: Bearer YOUR_API_TOKEN
 
 ```
+
 ### Success Response
-When your token response is verified, the server returns to a `200 OK` status with the following payload: 
+
+When your token response is verified, the server returns to a `200 OK` status with the following payload:
 
 ```json
+
 {
     "authenticated: true,
     "user_id": "usr_81obsidian",
@@ -25,5 +29,3 @@ git add .
 git commit -m "docs: add authentication json payload example"
 
 ```
-
-

@@ -1,5 +1,7 @@
 # My First API Documentation
+
 ## Documentation Menu
+
 * [System Overview](overview.md)
 * [Authentication Guide](authentication.md)
 
@@ -8,11 +10,13 @@
 Welcome to my practice page! I am learning how to format text using Markdown.
 
 ## Why Learn Markdown?
+
 * It is easy to read.
 * It is used by major tech companies.
 * It keeps formatting simple.
 
 ### Sample Code Block
+
 Here is what a snippet of code looks like in Markdown:
 
 ```json
@@ -20,10 +24,14 @@ Here is what a snippet of code looks like in Markdown:
   "message": "Hello, World!",
   "status": "success"
 }
+```
+
 ## My Progress
+
 I feel pretty good that I'm learning something new
-```
-### Sample Code Block
+
+### Sample Code Block: 2
+
 Here is what a snippet of code looks like in Markdown:
 
 ```json
@@ -32,6 +40,7 @@ Here is what a snippet of code looks like in Markdown:
   "status": "success"
 }
 ```
+
 Ah, good catch! I know exactly what happened.
 
 In Markdown, a code block starts with three backticks (`````) and *must* end with three backticks (`````). If you don't close it, Markdown thinks **everything** you type after it is still part of that code block.
@@ -40,7 +49,7 @@ Right now, your code block looks like an open door, swallowing up your new heade
 
 Let’s fix that. Look at the left side of your screen where you edit the text. We need to make sure there are three backticks *before* the JSON code, and three backticks *after* the JSON code.
 
-### How it should look on the left side:
+### How it should look on the left side
 
 Modify that specific section so it looks exactly like this:
 
@@ -60,17 +69,18 @@ Here is what a snippet of code looks like in Markdown:
 
 To master documentation, we need to know how to highlight **important terms**...
 
+### The Fix
 
-### The Fix:
-Make sure you have those three backticks `` ``` `` on their own line right under that closing curly bracket `}`. 
+Make sure you have those three backticks `` ``` `` on their own line right under that closing curly bracket `}`.
 
-Once you add those closing backticks, the door will shut, and `## Core Concepts` and your table will instantly jump out of the code block on the right side and look like beautiful, normal headers and tables! 
+Once you add those closing backticks, the door will shut, and `## Core Concepts` and your table will instantly jump out of the code block on the right side and look like beautiful, normal headers and tables!
 
-## Core Concepts
+## Additional Core Concepts
 
 To master documentation, we need to know how to highlight **important terms** and link to external resources like the [Google Style Guide](https://developers.google.com/style).
 
 ### HTTP Methods Table
+
 API documentation relies heavily on tables to explain data. Here is a quick breakdown of common methods:
 
 | Method | Description | Success Code |
@@ -79,7 +89,9 @@ API documentation relies heavily on tables to explain data. Here is a quick brea
 | `POST` | Sends new data to a server | 201 Created |
 
 ## Practice Challenge
+
 ### Basketball
+
 #### How to shoot a basketball
 
 1. Make sure to grab the ball with both hands firmly. Place your dominant hand, your shooting hand right in front as your base, and your aiming hand on the side of the ball.
@@ -100,11 +112,11 @@ API documentation relies heavily on tables to explain data. Here is a quick brea
 ### Shooting Mechanics Reference
 
 | Step Number | Action | Mechanics To Focus on |
-| :--- | :--- | :---| 
-| Step 1 | Grip  | Place dominant right hand in front as your base |
-| Step 2 | Stance | Feet planted firmly, shoulder width apart | 
+| :--- | :--- | :---|                 Step 1 | Grip  | Place dominant right hand in front as your base |
+| Step 2 | Stance | Feet planted firmly, shoulder width apart |
 
 ## Project Milestones
+
 * [x] Master basic Markdown syntax (headings, lists, code blocks).
 * [x] Resolve table layout and column pipe errors.
 * [x] Initialize Git repository and link author profile.
