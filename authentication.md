@@ -8,7 +8,7 @@ Authorization: Bearer YOUR_API_TOKEN
 
 ```
 
-### Success Response
+## Success Response
 
 When your token response is verified, the server returns to a `200 OK` status with the following payload:
 
