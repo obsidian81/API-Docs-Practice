@@ -62,3 +62,27 @@ JSON
 ```
 
 ---
+
+## Retrieve User Profile
+
+`GET v1/users/{id}`
+
+Retrieves the profile details for a specific user by their unique identifier
+
+### Path Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | string | Yes | The unique string identifier (e.g., `usr_99` ) of the user profile. |
+
+### Response Example (`200 OK`)
+
+```json
+{ 
+    "id": "usr_99",
+    "username": "uthini_miti",
+    "email",: "uthinimiti202@gmail.com",
+    "bio": "Focused on mastery.",
+    "created_at": "2026-07-06T08:12:54Z"
+}
+```
