@@ -34,6 +34,8 @@ git commit -m "docs: add authentication json payload example"
 
 ## Create User Profile
 
+`POST /v1/users`
+
 Creates a new user profile in the system database.
 
 ### Request Body
