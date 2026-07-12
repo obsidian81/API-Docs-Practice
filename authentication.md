@@ -108,6 +108,6 @@ When an error occurs, the response body contains a detailed error object instead
   "error": {
     "code": "resource_not_found",
     "message": "No user profile found with the ID 'usr_99'.",
-    "doc_url": "[https://api.example.com/docs/errors#resource_not_found](https://api.example.com/docs/errors#resource_not_found)"
+  "doc_url": "https://api.example.com/docs/errors#resource_not_found"
   }
 }
