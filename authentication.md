@@ -86,3 +86,28 @@ Retrieves the profile details for a specific user by their unique identifier
     "created_at": "2026-07-06T08:12:54Z"
 }
 ```
+
+## Error Handling
+
+The API returns standard HTTP status codes to indicate the success or failure of an API request.
+
+### Error Response Codes
+
+| Status Code | Type | Description |
+| :--- | :--- | :--- |
+| `400 Bad Request` | Client Error | The request was unacceptable, often due to missing a required parameter or malformed JSON syntax. |
+| `401 Unauthorized` | Client Error | No valid API token was provided in the authorization header. |
+| `404 Not Found` | Client Error | The requested resource (e.g., a user profile ID) does not exist. |
+
+### Error Payload Example
+
+When an error occurs, the response body contains a detailed error object instead of the resource payload:
+
+```json
+{
+  "error": {
+    "code": "resource_not_found",
+    "message": "No user profile found with the ID 'usr_99'.",
+    "doc_url": "[https://api.example.com/docs/errors#resource_not_found](https://api.example.com/docs/errors#resource_not_found)"
+  }
+}
