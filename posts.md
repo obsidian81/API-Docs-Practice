@@ -71,3 +71,44 @@ When returning a list, the API wraps the payload in a JSON array block `[]`:
   }
 ]
 ```
+
+---
+
+## Retrieve a Post
+
+`GET /posts/{id}`
+
+Retrieves the detailed metadata for a specific post using its unique identifier.
+
+### Path Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | string | Yes | The unique identifier string (e.g., `pst_101`) of the post resource. |
+
+### Response Example (`200 OK`)
+
+```json
+{
+  "post_id": "pst_101",
+  "user_id": "usr_99",
+  "content": "Building out a comprehensive API documentation portal from the ground up! #TechnicalWriting",
+  "published_at": "2026-07-13T10:50:00Z"
+}
+```
+
+## Delete a Post
+
+`DELETE /posts/{id}`
+
+Permanently removes a post from the database. This action cannot be undone.
+
+### Path Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | string | Yes | The unique identifier string of the post to be deleted. |
+
+### Response Example ( `204 No Content`)
+
+When a deletion is successful, the server responds with a `204 No Content` status code and an entirely empty response body, indicating the resource no longer exists.
