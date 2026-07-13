@@ -1,4 +1,4 @@
-# Authentiation
+# Authentication
 
 All API requests must include a secure token in the header to be authorized
 
