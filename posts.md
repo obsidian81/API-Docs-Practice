@@ -51,7 +51,7 @@ Retrieves a paginated list of all posts across the platform, ordered by the most
 | :--- | :--- | :--- | :--- | :--- |
 | `limit` | integer | No | The maximum number of posts to return in the response array. Max is 100. | `20` |
 
-### Response Example (`200 OK`)
+### Response Example (Single Post `200 OK`)
 
 When returning a list, the API wraps the payload in a JSON array block `[]`:
 
@@ -103,7 +103,7 @@ Retrieves the detailed metadata for a specific post using its unique identifier.
 
 Permanently removes a post from the database. This action cannot be undone.
 
-### Path Parameters
+### Delete Path Parameters
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
