@@ -113,3 +113,4 @@ When an error occurs, the response body contains a detailed error object instead
   "doc_url": "https://api.example.com/docs/errors#resource_not_found"
   }
 }
+```
