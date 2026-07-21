@@ -1,4 +1,4 @@
-# Sidebar
+# API Documentation
 
 * [Overview](overview.md)
 * [Authentication](authentication.md)

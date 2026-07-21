@@ -35,7 +35,7 @@ curl -X POST [https://api.example.com/v1/posts](https://api.example.com/v1/posts
 
 #### JavaScript
 
-  ```
+```javascript
 
   const response = await fetch('[https://api.example.com/v1/posts](https://api.example.com/v1/posts)', {
   method: 'POST',
@@ -56,7 +56,7 @@ console.log(data);
 
 #### Python
 
-```
+```python
 import requests
 
 url = "[https://api.example.com/v1/posts](https://api.example.com/v1/posts)"
