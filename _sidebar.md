@@ -1,11 +1,11 @@
 # Sidebar
 
-* **Getting Started**
+* Getting Started
   * [Overview](overview.md)
   * [Authentication](authentication.md)
 
-* **Core Resources**
+* Core Resources
   * [Posts API](posts.md)
 
-* **Reference**
+* Reference
   * [Error Handling](errors.md)
