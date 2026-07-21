@@ -1,114 +1,94 @@
 # Posts API
 
-The Posts API allows you to create, manage, and retrieve content updates published by user profiles.
-
-All endpoints in this section are relative to the base URL: `https://api.example.com/v1`.
+Manage blog posts and associated user content within the system.
 
 ---
 
 ## Create a Post
 
-`POST /posts`
+`POST /v1/posts`
 
-Creates a new post record associated with an active user profile.
+Creates a new blog post entry. Requires an active Bearer Token.
 
-### Request Body
+### Request Body Schema
 
-| Parameter | Type | Required | Description |
+| Field | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `user_id` | string | Yes | The unique identifier (`usr_99`) of the profile creating the post. |
-| `content` | string | Yes | The body text of the post. Maximum 280 characters. |
+| `title` | `string` | Yes | Title of the post (max 100 chars). |
+| `body` | `string` | Yes | Main content body of the post. |
+| `tags` | `array` | No | List of string tags (e.g., `["tech", "api"]`). |
 
-### Request Example
+### Code Examples
 
-```json
-{
-  "user_id": "usr_99",
-  "content": "Building out a comprehensive API documentation portal from the ground up! #TechnicalWriting"
-}
-```
+#### cURL
 
-### Response Example (`201 Created`)
+```bash
+curl -X POST [https://api.example.com/v1/posts](https://api.example.com/v1/posts) \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Mastering Docs-as-Code",
+    "body": "Docs-as-code treats documentation like software source code.",
+    "tags": ["developer-experience", "documentation"]
+  }'
+  ```
 
-```json
-{
-  "post_id": "pst_101",
-  "user_id": "usr_99",
-  "content": "Building out a comprehensive API documentation portal from the ground up! #TechnicalWriting",
-  "published_at": "2026-07-13T10:50:00Z"
-}
-```
+#### JavaScript
 
-### List All Posts
+  ```
 
-`GET/posts`
-
-Retrieves a paginated list of all posts across the platform, ordered by the most recent publication date.
-
-### Query Parameters
-
-| Parameter | Type | Required | Description | Default |
-| :--- | :--- | :--- | :--- | :--- |
-| `limit` | integer | No | The maximum number of posts to return in the response array. Max is 100. | `20` |
-
-### Response Example (Single Post `200 OK`)
-
-When returning a list, the API wraps the payload in a JSON array block `[]`:
-
-```json
-[
-  {
-    "post_id": "pst_101",
-    "user_id": "usr_99",
-    "content": "Building out a comprehensive API documentation portal from the ground up! #TechnicalWriting",
-    "published_at": "2026-07-13T10:50:00Z"
+  const response = await fetch('[https://api.example.com/v1/posts](https://api.example.com/v1/posts)', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_TOKEN',
+    'Content-Type': 'application/json'
   },
-  {
-    "post_id": "pst_100",
-    "user_id": "usr_12",
-    "content": "Just finished mastering the core Git branch lifecycle.",
-    "published_at": "2026-07-12T14:22:15Z"
-  }
-]
+  body: JSON.stringify({
+    title: 'Mastering Docs-as-Code',
+    body: 'Docs-as-code treats documentation like software source code.',
+    tags: ['developer-experience', 'documentation']
+  })
+});
+
+const data = await response.json();
+console.log(data);
 ```
 
----
+#### Python
 
-## Retrieve a Post
+```
+import requests
 
-`GET /posts/{id}`
+url = "[https://api.example.com/v1/posts](https://api.example.com/v1/posts)"
+headers = {
+    "Authorization": "Bearer YOUR_API_TOKEN",
+    "Content-Type": "application/json"
+}
+payload = {
+    "title": "Mastering Docs-as-Code",
+    "body": "Docs-as-code treats documentation like software source code.",
+    "tags": ["developer-experience", "documentation"]
+}
 
-Retrieves the detailed metadata for a specific post using its unique identifier.
+response = requests.post(url, json=payload, headers=headers)
+print(response.json())
 
-### Path Parameters
+```
 
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | string | Yes | The unique identifier string (e.g., `pst_101`) of the post resource. |
+### Response Schema
 
-### Response Example (`200 OK`)
+#### Success Response (`201 Created`)
 
 ```json
 {
-  "post_id": "pst_101",
-  "user_id": "usr_99",
-  "content": "Building out a comprehensive API documentation portal from the ground up! #TechnicalWriting",
-  "published_at": "2026-07-13T10:50:00Z"
+  "id": "post_987654321",
+  "title": "Mastering Docs-as-Code",
+  "body": "Docs-as-code treats documentation like software source code.",
+  "tags": [
+    "developer-experience",
+    "documentation"
+  ],
+  "created_at": "2026-07-21T20:41:59Z",
+  "updated_at": "2026-07-21T20:41:59Z"
 }
 ```
-
-## Delete a Post
-
-`DELETE /posts/{id}`
-
-Permanently removes a post from the database. This action cannot be undone.
-
-### Delete Path Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | string | Yes | The unique identifier string of the post to be deleted. |
-
-### Response Example ( `204 No Content`)
-
-When a deletion is successful, the server responds with a `204 No Content` status code and an entirely empty response body, indicating the resource no longer exists.
