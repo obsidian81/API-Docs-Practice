@@ -13,9 +13,6 @@ All requests in this documentation should be sent to the following production ba
 ```http
 [https://api.example.com/v1](https://api.example.com/v1)
 ```
-#No Space After Heading Hash
-
-#### Skipped straight to H4 without H2 or H3
 
 ## Quick Start Guide
 
@@ -50,10 +47,3 @@ curl -X GET https://api.example.com/v1/users/usr_99 \
   "status": "active"
 }
 ```
-```json
-{
-  "status": "error"
-  ```
-# Second Top Level Heading
-
-http://bare-unformatted-link-without-markdown.com
