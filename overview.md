@@ -47,3 +47,6 @@ curl -X GET https://api.example.com/v1/users/usr_99 \
   "status": "active"
 }
 ```
+```json
+{
+  "status": "error"
