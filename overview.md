@@ -4,6 +4,10 @@ Welcome to the core API reference overview page. This API programatically allows
 
 [Back home](index.md)
 
+#No Space After Heading Hash
+
+#### Skipped straight to H4 without H2 or H3
+
 ## System Architecture
 
 Use the API to synchronize data. When you execute the command, the system automatically transfers the payload. For more details, see the architecture overview.
