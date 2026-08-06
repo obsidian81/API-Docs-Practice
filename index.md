@@ -37,17 +37,14 @@ Here is what a snippet of code looks like in Markdown:
 ```json
 {
   "message": "Hello, World!",
-  "status": "success"
-}
-```
-
-Ah, good catch! I know exactly what happened.
+  "status": "success
+  ```
 
 In Markdown, a code block starts with three backticks (`````) and *must* end with three backticks (`````). If you don't close it, Markdown thinks **everything** you type after it is still part of that code block.
 
 Right now, your code block looks like an open door, swallowing up your new headers, text, and tables.
 
-Let’s fix that. Look at the left side of your screen where you edit the text. We need to make sure there are three backticks *before* the JSON code, and three backticks *after* the JSON code.
+Look at the left side of your screen where you edit the text. We need to make sure there are three backticks *before* the JSON code, and three backticks *after* the JSON code.
 
 ### How it should look on the left side
 
@@ -108,12 +105,6 @@ API documentation relies heavily on tables to explain data. Here is a quick brea
 | :--- | :--- | :--- |
 | Step 1 | Grip | Place dominant hand right in front as your base |
 | Step 2 | Stance | Feet planted firmly, shoulder-width apart |
-
-### Shooting Mechanics Reference
-
-| Step Number | Action | Mechanics To Focus on |
-| :--- | :--- | :---|                 Step 1 | Grip  | Place dominant right hand in front as your base |
-| Step 2 | Stance | Feet planted firmly, shoulder width apart |
 
 ## Project Milestones
 
