@@ -50,3 +50,7 @@ curl -X GET https://api.example.com/v1/users/usr_99 \
 ```json
 {
   "status": "error"
+  ```
+# Second Top Level Heading
+
+http://bare-unformatted-link-without-markdown.com
