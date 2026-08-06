@@ -48,7 +48,3 @@ curl -X GET https://api.example.com/v1/users/usr_99 \
 }
 ```
 
-```json
-{
-  "status": "error"
-  ```
