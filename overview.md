@@ -1,6 +1,6 @@
 # API Overview
 
-Welcome to the core API reference overview page. This API programatically allows you to manage data and executive commands.
+Welcome to the core API reference overview page. This API programmatically allows you to manage data and executive commands.
 
 [Back home](index.md)
 
