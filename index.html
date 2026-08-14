@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> <link rel="stylesheet" href="//unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+<head>
   <meta charset="UTF-8">
-  <title>API Documentation</title>
+  <title>API Docs Portal</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="API Documentation Hub">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  
-  <!-- Docsify Theme -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//unpkg.com/swagger-ui-dist@5/swagger-ui.css">
 </head>
-<body> <script src="//unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
-<script>
-  window.$docsify = window.$docsify || {};
-  window.$docsify.plugins = [].concat(window.$docsify.plugins || [], function(hook) {
-    hook.doneEach(function() {
-      if (document.getElementById('swagger-ui')) {
-        SwaggerUIBundle({
-          url: "openapi.yaml",
-          dom_id: '#swagger-ui',
-        });
-      }
-    });
-  });
-</script>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'API Docs Portal',
+      repo: '',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      plugins: [
+        function(hook, vm) {
+          hook.doneEach(function() {
+            var el = document.getElementById('swagger-ui');
+            if (el) {
+              SwaggerUIBundle({
+                url: "openapi.yaml",
+                dom_id: '#swagger-ui',
+              });
+            }
+          });
+        }
+      ]
+    };
+  </script>
+  <!-- Docsify SDK -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Swagger UI Bundle -->
+  <script src="//unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+</body>
+</html>
