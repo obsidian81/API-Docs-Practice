@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Practice User API
+  description: A practice API specification for managing user profiles and authentication.
+  version: 1.0.0
+paths:
+  /users/{id}:
+    get:
+      summary: Retrieve a user by ID
+      description: Returns user profile details for a given unique identifier.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique string ID of the user
+          schema:
+            type: string
+            example: "usr_99"
+      responses:
+        '200':
+          description: User found successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "usr_99"
+                  username:
+                    type: string
+                    example: "uthini_miti"
+                  status:
+                    type: string
+                    example: "active"
+        '404':
+          description: User not found
