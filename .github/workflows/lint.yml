@@ -25,7 +25,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install & Run Spectral
-        uses: stoplightio/spectral-action@v0.8.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          file_glob: 'openapi.yaml'
+          node-version: '20'
+
+      - name: Run Spectral Lint
+        run: npx @stoplight/spectral-cli lint openapi.yaml --ruleset .spectral.yaml
