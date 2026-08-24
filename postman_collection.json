@@ -1,0 +1,44 @@
+{
+  "info": {
+    "name": "User Management API",
+    "description": "Postman Collection for testing User Management API endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "List Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.example.com/v1/users",
+          "protocol": "https",
+          "host": ["api", "example", "com"],
+          "path": ["v1", "users"]
+        }
+      }
+    },
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alex Mercer\",\n  \"email\": \"alex.mercer@example.com\",\n  \"role\": \"developer\"\n}"
+        },
+        "url": {
+          "raw": "https://api.example.com/v1/users",
+          "protocol": "https",
+          "host": ["api", "example", "com"],
+          "path": ["v1", "users"]
+        }
+      }
+    }
+  ]
+}
