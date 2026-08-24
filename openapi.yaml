@@ -1,37 +1,190 @@
 openapi: 3.0.3
 info:
-  title: Practice User API
-  description: A practice API specification for managing user profiles and authentication.
-  version: 1.0.0
+  title: User Management API
+  description: A production-ready API specification for user profile management.
+  version: 1.1.0
 paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: List all users
+      description: Returns a paginated list of user objects.
+      operationId: listUsers
+      responses:
+        '200':
+          description: A list of user accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+    post:
+      tags:
+        - Users
+      summary: Create a user
+      description: Creates a new user profile with the provided details.
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
   /users/{id}:
     get:
+      tags:
+        - Users
       summary: Retrieve a user by ID
-      description: Returns user profile details for a given unique identifier.
+      description: Returns a single user object based on the provided unique ID.
+      operationId: getUserById
       parameters:
         - name: id
           in: path
           required: true
-          description: Unique string ID of the user
+          description: Unique identifier of the user
           schema:
             type: string
-            example: "usr_99"
       responses:
         '200':
-          description: User found successfully
+          description: User found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: "usr_99"
-                  username:
-                    type: string
-                    example: "uthini_miti"
-                  status:
-                    type: string
-                    example: "active"
+                $ref: '#/components/schemas/User'
         '404':
-          description: User not found
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Users
+      summary: Update a user
+      description: Updates the profile details for an existing user.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the user
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      description: Permanently removes a user record from the system.
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the user
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted successfully (no content returned)
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - role
+      properties:
+        id:
+          type: string
+          example: "usr_998234"
+        name:
+          type: string
+          example: "Alex Mercer"
+        email:
+          type: string
+          format: email
+          example: "alex.mercer@example.com"
+        role:
+          type: string
+          enum: [admin, developer, viewer]
+          example: "developer"
+
+    CreateUserRequest:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          example: "Alex Mercer"
+        email:
+          type: string
+          format: email
+          example: "alex.mercer@example.com"
+        role:
+          type: string
+          enum: [admin, developer, viewer]
+          default: viewer
+          example: "developer"
+
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "Invalid JSON payload provided."
+
+  responses:
+    BadRequest:
+      description: Bad Request - Missing required fields or invalid syntax
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    NotFound:
+      description: Resource Not Found - The specified entity does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
