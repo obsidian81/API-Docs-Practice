@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: User Management API
   description: A production-ready API specification for user profile management.
-  version: 1.1.0
+  version: 1.2.0
+security:
+  - BearerAuth: []
 paths:
   /users:
     get:
@@ -20,6 +22,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
     post:
       tags:
@@ -42,6 +46,8 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /users/{id}:
     get:
@@ -64,6 +70,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
 
@@ -95,6 +103,8 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
 
@@ -114,10 +124,19 @@ paths:
       responses:
         '204':
           description: User deleted successfully (no content returned)
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
 
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter your JSON Web Token (JWT) using the Bearer scheme.
+
   schemas:
     User:
       type: object
@@ -169,14 +188,21 @@ components:
       properties:
         code:
           type: integer
-          example: 400
+          example: 401
         message:
           type: string
-          example: "Invalid JSON payload provided."
+          example: "Authentication token missing or invalid."
 
   responses:
     BadRequest:
       description: Bad Request - Missing required fields or invalid syntax
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Unauthorized - Valid JWT Bearer token required
       content:
         application/json:
           schema:
