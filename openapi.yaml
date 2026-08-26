@@ -1,133 +1,41 @@
 openapi: 3.0.3
 info:
   title: User Management API
-  description: A production-ready API specification for user profile management.
-  version: 1.2.0
+  description: A production-ready API for managing user accounts and roles.
+  version: 1.1.0
+
+servers:
+  - url: https://api.example.com/v1
+    description: Primary Production Server
+
 security:
   - BearerAuth: []
+
 paths:
   /users:
     get:
-      tags:
-        - Users
       summary: List all users
-      description: Returns a paginated list of user objects.
+      description: Retrieve a paginated list of registered users.
       operationId: listUsers
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
-          description: A list of user accounts
+          description: A paginated list of users retrieved successfully.
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/X-RateLimit-Reset'
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/PaginatedUserList'
         '401':
-          $ref: '#/components/responses/Unauthorized'
-
-    post:
-      tags:
-        - Users
-      summary: Create a user
-      description: Creates a new user profile with the provided details.
-      operationId: createUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUserRequest'
-      responses:
-        '201':
-          description: User created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-
-  /users/{id}:
-    get:
-      tags:
-        - Users
-      summary: Retrieve a user by ID
-      description: Returns a single user object based on the provided unique ID.
-      operationId: getUserById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Unique identifier of the user
-          schema:
-            type: string
-      responses:
-        '200':
-          description: User found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-    put:
-      tags:
-        - Users
-      summary: Update a user
-      description: Updates the profile details for an existing user.
-      operationId: updateUser
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Unique identifier of the user
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUserRequest'
-      responses:
-        '200':
-          description: User updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-    delete:
-      tags:
-        - Users
-      summary: Delete a user
-      description: Permanently removes a user record from the system.
-      operationId: deleteUser
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Unique identifier of the user
-          schema:
-            type: string
-      responses:
-        '204':
-          description: User deleted successfully (no content returned)
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+          $ref: '#/components/responses/401Unauthorized'
 
 components:
   securitySchemes:
@@ -135,7 +43,52 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Enter your JSON Web Token (JWT) using the Bearer scheme.
+      description: Enter your JWT token to authorize requests.
+
+  headers:
+    X-RateLimit-Limit:
+      description: The maximum number of requests allowed in the current time window.
+      schema:
+        type: integer
+        example: 100
+    X-RateLimit-Remaining:
+      description: The number of remaining requests allowed within the current window.
+      schema:
+        type: integer
+        example: 85
+    X-RateLimit-Reset:
+      description: The time at which the current rate limit window resets (Unix timestamp).
+      schema:
+        type: integer
+        example: 1693000000
+
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number to retrieve (1-indexed).
+      required: false
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    LimitParam:
+      name: limit
+      in: query
+      description: Number of items to return per page.
+      required: false
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+
+  responses:
+    401Unauthorized:
+      description: Unauthorized - Token missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
 
   schemas:
     User:
@@ -148,7 +101,8 @@ components:
       properties:
         id:
           type: string
-          example: "usr_998234"
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
         name:
           type: string
           example: "Alex Mercer"
@@ -158,33 +112,33 @@ components:
           example: "alex.mercer@example.com"
         role:
           type: string
-          enum: [admin, developer, viewer]
           example: "developer"
 
-    CreateUserRequest:
+    PaginatedUserList:
       type: object
-      required:
-        - name
-        - email
       properties:
-        name:
-          type: string
-          example: "Alex Mercer"
-        email:
-          type: string
-          format: email
-          example: "alex.mercer@example.com"
-        role:
-          type: string
-          enum: [admin, developer, viewer]
-          default: viewer
-          example: "developer"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        pagination:
+          type: object
+          properties:
+            total_count:
+              type: integer
+              example: 150
+            page:
+              type: integer
+              example: 1
+            limit:
+              type: integer
+              example: 20
+            has_more:
+              type: boolean
+              example: true
 
     ErrorResponse:
       type: object
-      required:
-        - code
-        - message
       properties:
         code:
           type: integer
@@ -192,25 +146,3 @@ components:
         message:
           type: string
           example: "Authentication token missing or invalid."
-
-  responses:
-    BadRequest:
-      description: Bad Request - Missing required fields or invalid syntax
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-
-    Unauthorized:
-      description: Unauthorized - Valid JWT Bearer token required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-
-    NotFound:
-      description: Resource Not Found - The specified entity does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
