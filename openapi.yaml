@@ -107,7 +107,7 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
 
-  schemas:
+ schemas:
     BaseUser:
       type: object
       required:
@@ -129,21 +129,16 @@ components:
           example: "alex.mercer@example.com"
         user_type:
           type: string
-          enum: [admin, developer]
           example: "developer"
-AdminUser:
+
+    AdminUser:
       allOf:
         - $ref: '#/components/schemas/BaseUser'
         - type: object
           required:
-            - user_type
             - admin_level
             - permissions
           properties:
-            user_type:
-              type: string
-              const: admin
-              example: "admin"
             admin_level:
               type: integer
               example: 1
@@ -158,14 +153,9 @@ AdminUser:
         - $ref: '#/components/schemas/BaseUser'
         - type: object
           required:
-            - user_type
             - github_handle
             - api_key_limit
           properties:
-            user_type:
-              type: string
-              const: developer
-              example: "developer"
             github_handle:
               type: string
               example: "alexm-dev"
@@ -175,11 +165,14 @@ AdminUser:
 
     UserProfile:
       type: object
+      discriminator:
+        propertyName: user_type
+        mapping:
+          admin: '#/components/schemas/AdminUser'
+          developer: '#/components/schemas/DeveloperUser'
       oneOf:
         - $ref: '#/components/schemas/AdminUser'
         - $ref: '#/components/schemas/DeveloperUser'
-      discriminator:
-        propertyName: user_type
 
     UserCreatedEvent:
       type: object
