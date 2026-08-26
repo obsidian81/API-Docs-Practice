@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: User Management API
   description: A production-ready API for managing user accounts and roles.
