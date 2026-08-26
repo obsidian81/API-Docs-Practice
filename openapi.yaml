@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: User Management API
   description: A production-ready API for managing user accounts and roles.
-  version: 1.2.0
+  version: 1.3.0
 
 servers:
   - url: https://api.example.com/v1
@@ -108,13 +108,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
 
   schemas:
-    User:
+    BaseUser:
       type: object
       required:
         - id
         - name
         - email
-        - role
+        - user_type
       properties:
         id:
           type: string
@@ -127,9 +127,52 @@ components:
           type: string
           format: email
           example: "alex.mercer@example.com"
-        role:
+        user_type:
           type: string
+          enum: [admin, developer]
           example: "developer"
+
+    AdminUser:
+      allOf:
+        - $ref: '#/components/schemas/BaseUser'
+        - type: object
+          required:
+            - admin_level
+            - permissions
+          properties:
+            admin_level:
+              type: integer
+              example: 1
+            permissions:
+              type: array
+              items:
+                type: string
+              example: ["users:read", "users:write", "billing:manage"]
+
+    DeveloperUser:
+      allOf:
+        - $ref: '#/components/schemas/BaseUser'
+        - type: object
+          required:
+            - github_handle
+            - api_key_limit
+          properties:
+            github_handle:
+              type: string
+              example: "alexm-dev"
+            api_key_limit:
+              type: integer
+              example: 5
+
+    UserProfile:
+      oneOf:
+        - $ref: '#/components/schemas/AdminUser'
+        - $ref: '#/components/schemas/DeveloperUser'
+      discriminator:
+        propertyName: user_type
+        mapping:
+          admin: '#/components/schemas/AdminUser'
+          developer: '#/components/schemas/DeveloperUser'
 
     UserCreatedEvent:
       type: object
@@ -151,7 +194,7 @@ components:
           format: date-time
           example: "2026-08-26T12:00:00Z"
         data:
-          $ref: '#/components/schemas/User'
+          $ref: '#/components/schemas/UserProfile'
 
     PaginatedUserList:
       type: object
@@ -159,7 +202,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/User'
+            $ref: '#/components/schemas/UserProfile'
         pagination:
           type: object
           properties:
