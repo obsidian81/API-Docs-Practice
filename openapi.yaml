@@ -131,15 +131,19 @@ components:
           type: string
           enum: [admin, developer]
           example: "developer"
-
-    AdminUser:
+AdminUser:
       allOf:
         - $ref: '#/components/schemas/BaseUser'
         - type: object
           required:
+            - user_type
             - admin_level
             - permissions
           properties:
+            user_type:
+              type: string
+              const: admin
+              example: "admin"
             admin_level:
               type: integer
               example: 1
@@ -154,9 +158,14 @@ components:
         - $ref: '#/components/schemas/BaseUser'
         - type: object
           required:
+            - user_type
             - github_handle
             - api_key_limit
           properties:
+            user_type:
+              type: string
+              const: developer
+              example: "developer"
             github_handle:
               type: string
               example: "alexm-dev"
