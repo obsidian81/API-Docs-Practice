@@ -3,6 +3,9 @@ info:
   title: User Management API
   description: A production-ready API for managing user accounts and roles.
   version: 1.3.0
+  contact:
+    name: API Support
+    email: support@example.com
 
 servers:
   - url: https://api.example.com/v1
@@ -34,6 +37,8 @@ paths:
       summary: List all users
       description: Retrieve a paginated list of registered users.
       operationId: listUsers
+      tags:
+        - Users
       parameters:
         - $ref: '#/components/parameters/PageParam'
         - $ref: '#/components/parameters/LimitParam'
@@ -107,7 +112,7 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
 
- schemas:
+  schemas:
     BaseUser:
       type: object
       required:
