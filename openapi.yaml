@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: User Management API
   description: A production-ready API for managing user accounts and roles.
-  version: 1.1.0
+  version: 1.2.0
 
 servers:
   - url: https://api.example.com/v1
@@ -10,6 +10,23 @@ servers:
 
 security:
   - BearerAuth: []
+
+webhooks:
+  userCreated:
+    post:
+      summary: User Created Event
+      description: |
+        Triggered when a new user account is successfully registered. 
+        Your server should respond with `200 OK` to acknowledge receipt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreatedEvent'
+      responses:
+        '200':
+          description: Event received successfully.
 
 paths:
   /users:
@@ -113,6 +130,28 @@ components:
         role:
           type: string
           example: "developer"
+
+    UserCreatedEvent:
+      type: object
+      required:
+        - id
+        - event
+        - timestamp
+        - data
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "evt_9082347109283"
+        event:
+          type: string
+          example: "user.created"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-08-26T12:00:00Z"
+        data:
+          $ref: '#/components/schemas/User'
 
     PaginatedUserList:
       type: object
