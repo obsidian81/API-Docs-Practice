@@ -7,6 +7,10 @@ info:
     name: API Support
     email: support@example.com
 
+tags:
+  - name: Users
+    description: Operations related to user management
+
 servers:
   - url: https://api.example.com/v1
     description: Primary Production Server
@@ -190,7 +194,7 @@ components:
         id:
           type: string
           format: uuid
-          example: "evt_9082347109283"
+          example: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
         event:
           type: string
           example: "user.created"
