@@ -171,9 +171,6 @@ components:
         - $ref: '#/components/schemas/DeveloperUser'
       discriminator:
         propertyName: user_type
-        mapping:
-          admin: '#/components/schemas/AdminUser'
-          developer: '#/components/schemas/DeveloperUser'
 
     UserCreatedEvent:
       type: object
