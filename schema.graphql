@@ -37,8 +37,19 @@ type User {
 Defines access control levels for users.
 """
 enum UserRole {
+  """
+  Administrative user with full system access and platform operations privileges.
+  """
   ADMIN
+
+  """
+  Standard platform customer capable of placing and managing personal orders.
+  """
   CUSTOMER
+
+  """
+  Developer account with access to API key management and integration tooling.
+  """
   DEVELOPER
 }
 
@@ -76,10 +87,29 @@ type Order {
 Possible states for an order lifecycle.
 """
 enum OrderStatus {
+  """
+  Order has been created but payment has not yet been processed.
+  """
   PENDING
+
+  """
+  Payment confirmed; order is currently being fulfilled by warehouse operations.
+  """
   PROCESSING
+
+  """
+  Order has been dispatched and is currently in transit with the carrier.
+  """
   SHIPPED
+
+  """
+  Order has been successfully delivered to the customer address.
+  """
   DELIVERED
+
+  """
+  Order was terminated prior to fulfillment and refunded if applicable.
+  """
   CANCELLED
 }
 
