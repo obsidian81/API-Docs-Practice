@@ -1,0 +1,104 @@
+"""
+Represents an individual user account within the system.
+"""
+type User {
+  """
+  The unique identifier for the user (UUID v4 format).
+  """
+  id: ID!
+
+  """
+  The full legal name of the user.
+  """
+  name: String!
+
+  """
+  The primary email address associated with the account.
+  """
+  email: String!
+
+  """
+  The role determining user permissions within the system.
+  """
+  role: UserRole!
+
+  """
+  A list of orders placed by this user.
+  """
+  orders(limit: Int = 10): [Order!]!
+
+  """
+  ISO-8601 formatted timestamp of when the user account was created.
+  """
+  createdAt: String!
+}
+
+"""
+Defines access control levels for users.
+"""
+enum UserRole {
+  ADMIN
+  CUSTOMER
+  DEVELOPER
+}
+
+"""
+Represents a purchase transaction made by a user.
+"""
+type Order {
+  """
+  Unique identifier for the order (UUID v4 format).
+  """
+  id: ID!
+
+  """
+  The current operational state of the order.
+  """
+  status: OrderStatus!
+
+  """
+  Total monetary value of the order in USD cents.
+  """
+  totalAmount: Int!
+
+  """
+  The user who placed the order.
+  """
+  customer: User!
+
+  """
+  ISO-8601 formatted timestamp of when the order was placed.
+  """
+  createdAt: String!
+}
+
+"""
+Possible states for an order lifecycle.
+"""
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+"""
+Root entry point for all read queries.
+"""
+type Query {
+  """
+  Fetch a single user by their unique ID.
+  """
+  user(id: ID!): User
+
+  """
+  Retrieve a list of all registered users with optional pagination.
+  """
+  users(limit: Int = 20, offset: Int = 0): [User!]!
+
+  """
+  Fetch an order by its unique ID.
+  """
+  order(id: ID!): Order
+}
