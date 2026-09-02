@@ -132,3 +132,58 @@ type Query {
   """
   order(id: ID!): Order
 }
+
+"""
+Input parameters required to register a new user account.
+"""
+input CreateUserInput {
+  """
+  The full legal name of the user.
+  """
+  name: String!
+
+  """
+  A valid, unique email address for the account.
+  """
+  email: String!
+
+  """
+  The system access level assigned to the user.
+  """
+  role: UserRole! = CUSTOMER
+}
+
+"""
+Input parameters required to transition an order to a new lifecycle state.
+"""
+input UpdateOrderStatusInput {
+  """
+  The unique ID of the order being modified.
+  """
+  orderId: ID!
+
+  """
+  The new target state for the order.
+  """
+  status: OrderStatus!
+}
+
+"""
+Root entry point for all write and side-effect operations.
+"""
+type Mutation {
+  """
+  Register a new user in the system.
+  """
+  createUser(input: CreateUserInput!): User!
+
+  """
+  Update the operational status of an existing order.
+  """
+  updateOrderStatus(input: UpdateOrderStatusInput!): Order!
+
+  """
+  Cancel an order prior to warehouse dispatch.
+  """
+  cancelOrder(id: ID!): Order!
+}
