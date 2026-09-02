@@ -26,7 +26,7 @@ jobs:
           node-version: '20'
 
       - name: Install GraphQL Schema Linter
-        run: npm install -g graphql-schema-linter graphqlS
+        run: npm install -g graphql-schema-linter graphql
 
       - name: Run Schema Linter
         run: graphql-schema-linter schema.graphql
