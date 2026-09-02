@@ -1,0 +1,10 @@
+{
+  "rules": [
+    "enum-values-have-descriptions",
+    "fields-have-descriptions",
+    "types-have-descriptions",
+    "defined-types-are-used",
+    "input-object-values-have-descriptions"
+  ],
+  "schemaPaths": ["schema.graphql"]
+}

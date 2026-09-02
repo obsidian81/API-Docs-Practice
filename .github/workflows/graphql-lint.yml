@@ -1,0 +1,32 @@
+name: Lint GraphQL Schema
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.graphql'
+      - '.graphql-schema-linterrc'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.graphql'
+      - '.graphql-schema-linterrc'
+
+jobs:
+  graphql-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install GraphQL Schema Linter
+        run: npm install -g graphql-schema-linter graphqlS
+
+      - name: Run Schema Linter
+        run: graphql-schema-linter schema.graphql
